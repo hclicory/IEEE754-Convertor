@@ -7,6 +7,7 @@ IEEE754 Convertor
 
 ## 2021-08-23
 ### Version 1.0
+>Input binary and convert to decimal number
 
 Able to input binary with digit:
 Sign : 1 digit
