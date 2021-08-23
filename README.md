@@ -16,8 +16,9 @@ Exponent : 8 digits
 Mantissa : 23 digits  
 
 Notes:
-1. Over the digits limit is not allowed
-2. Program will auto add trailing zero if digit is not enough
+1. Over 3 input fields (Sign+Exponent+Mantissa) is not allowed
+2. Auto add trailing zero if digit is not enough
+3. Auto cut the excess digit
 
 Example:  
 Run:
