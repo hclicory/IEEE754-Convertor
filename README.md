@@ -7,12 +7,13 @@ IEEE754 Convertor
 
 ## 2021-08-23
 ### Version 1.0
+Feature  
 >Input binary and convert to decimal number
 
-Able to input binary with digit:
-Sign : 1 digit
-Exponent : 8 digits
-Mantissa : 23 digits
+Able to input binary with digit:  
+Sign : 1 digit  
+Exponent : 8 digits  
+Mantissa : 23 digits  
 
 Notes:
 1. Over the digits limit is not allowed
