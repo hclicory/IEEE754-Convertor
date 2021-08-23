@@ -132,13 +132,12 @@ public class IEEE754Convertor {
 				mantissa2 = mantissa.substring(8,16);
 				mantissa3 = mantissa.substring(16,23);
 
-				if (checkBinary()){
-
-					System.out.println("---------------------------");
-					System.out.println("Binary value is: " + sign + " " + exponent + " " + mantissa);
-					System.out.println("---------------------------");
-
-					if (checkInteger()){
+				if (checkInteger()){
+					if (checkBinary()){
+						System.out.println("---------------------------");
+						System.out.println("Binary value is: " + sign + " " + exponent + " " + mantissa);
+						System.out.println("---------------------------");
+					
 						if (sign.equals("0")) {
 							outSign = "+";
 						}else{
@@ -163,10 +162,10 @@ public class IEEE754Convertor {
 						System.out.println("The Decimal value is : " + outSign + resultNoSide);
 
 					}else{
-						System.out.println("You must input integer only.");
+						System.out.println("You can enter 0 or 1 only");
 					}
 				}else{
-					System.out.println("You can enter 0 or 1 only");
+					System.out.println("You must input integer only.");
 				}
 			}else{
 				System.out.println("You must input 3 number");
