@@ -8,7 +8,7 @@ IEEE754 Convertor
 ## 2021-08-23
 ### Version 1.0
 Feature  
->Input binary and convert to decimal number
+>Input binary and convert to float and hex value
 
 Able to input binary with digit:  
 Sign : 1 digit  
@@ -39,4 +39,5 @@ Mantissa is : 1.185546875
 1.185546875 * 2^6 = 75.875
 ---------------------------
 The Decimal value is : +75.875
+Hex is : 4297c000
 ```
