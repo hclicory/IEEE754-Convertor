@@ -2,9 +2,6 @@ public class IEEE754Convertor {
 	private static String sign;
 	private static String exponent;
 	private static String mantissa;
-	private static String mantissa1;
-	private static String mantissa2;
-	private static String mantissa3;
 
 	private static String outSign;
 	private static double outMantissa;
@@ -28,18 +25,20 @@ public class IEEE754Convertor {
 			}
 		}
 	}
-
+	
 	public static boolean checkInteger(){
-		if (	isInteger(sign) &&
-			isInteger(exponent) &&
-			isInteger(mantissa1) &&
-			isInteger(mantissa2) &&
-			isInteger(mantissa3)
-		){
-			return true;
-		}else{
+		if (!isInteger(sign)){
 			return false;
 		}
+		if (!isInteger(exponent)){
+			return false;
+		}
+		for (int i=0; i < mantissa.length(); i++){
+			if (!isInteger(mantissa.substring(i, i+1))){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static boolean isInteger(String text){
@@ -53,18 +52,20 @@ public class IEEE754Convertor {
 			return false;
 		}
 	}
-
+	
 	public static boolean checkBinary(){
-		if (	isBinary(Integer.parseInt(sign)) &&
-			isBinary(Integer.parseInt(exponent)) &&
-			isBinary(Integer.parseInt(mantissa1)) &&
-			isBinary(Integer.parseInt(mantissa2)) &&
-			isBinary(Integer.parseInt(mantissa3))
-		){
-			return true;
-		}else{
+		if (!isBinary(Integer.parseInt(sign))){
 			return false;
 		}
+		if (!isBinary(Integer.parseInt(exponent))){
+			return false;
+		}
+		for (int i=0; i < mantissa.length(); i++){
+			if (!isBinary(Integer.parseInt(mantissa.substring(i, i+1)))){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static boolean isBinary(int binary){
@@ -80,6 +81,19 @@ public class IEEE754Convertor {
 		}
 	}
 
+	public static int getDecimal(String binaryStr){
+		int decimal = 0;
+		int n = binaryStr.length()-1;
+		
+		for (int i = 0; i < binaryStr.length() ; i++){	
+			int temp = Integer.parseInt(binaryStr.substring(i, i+1));
+			decimal += temp * Math.pow(2, n);
+			n--;
+		}
+		return decimal;
+	}
+
+/*
 	public static int getDecimal(int binary){
 		int decimal = 0;
 		int n = 0;
@@ -88,28 +102,34 @@ public class IEEE754Convertor {
 				break;
 			} else {
 				int temp = binary%10;
-				decimal = decimal + (int)(temp*Math.pow(2, n));
+				decimal += temp*Math.pow(2, n);
 				binary = binary/10;
 				n++;
 			}
 		}
 		return decimal;
 	}
+*/
 
-	public static double getFloatingPoint (int binary, int lenStart, int lenEnd){
+	public static double getFloatingPoint (String binaryStr){
 		double decimal = 0;
-		int n = -lenStart;
-		while(true){
-			if(n == lenEnd){
-				break;
-			} else {
-				int temp = binary%10;
-				decimal = decimal + temp*Math.pow(2, n);
-				binary = binary/10;
-				n++;
-			}
+		int n = -1;
+		
+		for (int i = 0; i < binaryStr.length(); i++){
+			int temp = Integer.parseInt(binaryStr.substring(i, i+1));
+			decimal = decimal + temp * Math.pow(2, n);
+			n--;
 		}
 		return decimal;
+	}
+	
+	public static String getHex(String binaryInString){
+		String hex = "";
+		
+		for (int i = 0 ; i < binaryInString.length()-4 ; i+=4 ){
+			hex = hex + Integer.toHexString(Integer.parseInt(binaryInString.substring(i,i+4),2));
+		}
+		return hex;
 	}
 
 	public static void main(String [] args) {
@@ -127,11 +147,6 @@ public class IEEE754Convertor {
 				exponent = exponent.substring(0,8);
 				mantissa = mantissa.substring(0,23);
 
-				//Split large number
-				mantissa1 = mantissa.substring(0,8);
-				mantissa2 = mantissa.substring(8,16);
-				mantissa3 = mantissa.substring(16,23);
-
 				if (checkInteger()){
 					if (checkBinary()){
 						System.out.println("---------------------------");
@@ -145,13 +160,10 @@ public class IEEE754Convertor {
 						}
 						System.out.println("Sign is : " + outSign);
 
-						outExponent = getDecimal(Integer.parseInt(exponent));
+						outExponent = getDecimal(exponent);
 						System.out.println("Exponent is : " + outExponent + " (" + outExponent + " - 127 = " + (outExponent - 127) + " )");
 
-						outMantissa = getFloatingPoint(Integer.parseInt(mantissa1), 8, 0);
-						outMantissa = outMantissa + getFloatingPoint(Integer.parseInt(mantissa2), 16, 8);
-						outMantissa = outMantissa + getFloatingPoint(Integer.parseInt(mantissa3), 23, 16);
-						outMantissa = 1 + outMantissa;
+						outMantissa = 1 + getFloatingPoint(mantissa);
 						System.out.println("Mantissa is : " + outMantissa);
 
 						System.out.println("---------------------------");
@@ -161,6 +173,7 @@ public class IEEE754Convertor {
 						System.out.println("---------------------------");
 						System.out.println("The Decimal value is : " + outSign + resultNoSide);
 
+						System.out.println("Hex is : " + getHex(sign+exponent+mantissa));
 					}else{
 						System.out.println("You can enter 0 or 1 only");
 					}
