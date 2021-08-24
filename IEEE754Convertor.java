@@ -126,7 +126,7 @@ public class IEEE754Convertor {
 	public static String getHex(String binaryInString){
 		String hex = "";
 		
-		for (int i = 0 ; i < binaryInString.length()-4 ; i+=4 ){
+		for (int i = 0 ; i <= binaryInString.length()-4 ; i+=4 ){
 			hex = hex + Integer.toHexString(Integer.parseInt(binaryInString.substring(i,i+4),2));
 		}
 		return hex;
